@@ -6,6 +6,7 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 import { GOOGLE_MAPS_APIKEY } from "@env";
 import { useDispatch } from 'react-redux';
 import { setDestination, setOrigin } from '../slices/navSlice';
+import NavFavourites from '../components/NavFavourites';
 
 const HomeScreen = () => {
   const dispatch=useDispatch();
@@ -16,7 +17,6 @@ const HomeScreen = () => {
             width:100,
             height:100,
             resizeMode :'contain',
-            
         }}
         source={{
             uri : "https://links.papareact.com/gzs"
@@ -34,12 +34,10 @@ const HomeScreen = () => {
         }}
         onPress={(data,details=null) => {
           console.log("details", data);
-          dispatch(
-            setOrigin({
-              location : details?.geometry.location,
+          dispatch(setOrigin({
+              location : details.geometry.location,
               description : data.description,
-            })
-          ),
+            })),
           dispatch(setDestination(null));
         }}
         fetchDetails={true}
@@ -54,6 +52,7 @@ const HomeScreen = () => {
         debounce={40}
         />
         <NavOptions/> 
+        <NavFavourites/>
       </View>
     </SafeAreaView>
   )
